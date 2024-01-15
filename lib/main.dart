@@ -1,7 +1,6 @@
 import 'package:animate/scroll_list.dart';
 import 'package:flutter/material.dart';
 
-import 'slide_list.dart';
 
 void main() {
   runApp(const MyApp());

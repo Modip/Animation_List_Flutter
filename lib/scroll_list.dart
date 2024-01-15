@@ -15,7 +15,6 @@ class _ScrollListState extends State<ScrollList> {
   final double itemSize = 250;
   final controller = ScrollController();
 
-  @override
   void onListnerController() {
     //print("controller:${controller.offset}");
     setState(() {});

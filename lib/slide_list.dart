@@ -77,7 +77,7 @@ class _SlideListState extends State<SlideList> {
                           ..rotateY(2.0 * fixRotation)
                           ..translate(-rotation * width * 0.8),
                         child: Container(
-                          width: width * 1,
+                          width: width * .9,
                           height: height * .62,
                           decoration: BoxDecoration(
                               boxShadow: const [
