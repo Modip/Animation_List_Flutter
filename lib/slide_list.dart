@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:animate/scroll_list.dart';
 import 'package:flutter/material.dart';
 
 import 'data.dart';
@@ -30,8 +33,9 @@ class _SlideListState extends State<SlideList> {
     super.dispose();
   }
 
-  @override
   int selectedItem = 0;
+
+  @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -47,21 +51,22 @@ class _SlideListState extends State<SlideList> {
           builder: (context, value, _) {
             return PageView.builder(
               controller: _controller,
+              physics: const BouncingScrollPhysics(),
               itemCount: pictures.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 final picture = pictures[index];
                 final percentage = index - value;
                 final rotation = percentage.clamp(0.0, 1.0);
-                if (index == 1) {
-                  print(percentage);
-                }
+                final fixRotation = pow(rotation, 0.5);
+                // if (index == 1) {
+                //   print(percentage);
+                // }
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      padding: EdgeInsets.all(12),
-                      // margin: EdgeInsets.only(left: 10, right: 10),
+                      padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -69,11 +74,11 @@ class _SlideListState extends State<SlideList> {
                         alignment: Alignment.topLeft,
                         transform: Matrix4.identity()
                           ..setEntry(3, 2, .001)
-                          ..rotateY(2 * rotation)
+                          ..rotateY(2.0 * fixRotation)
                           ..translate(-rotation * width * 0.8),
                         child: Container(
                           width: width * 1,
-                          height: height * .65,
+                          height: height * .62,
                           decoration: BoxDecoration(
                               boxShadow: const [
                                 BoxShadow(
@@ -91,7 +96,7 @@ class _SlideListState extends State<SlideList> {
                       ),
                     ),
                     const SizedBox(
-                      height: 3,
+                      height: 15,
                     ),
                     Text(
                       picture.title,
@@ -99,11 +104,11 @@ class _SlideListState extends State<SlideList> {
                           fontSize: 25, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
-                      height: 2,
+                      height: 10,
                     ),
                     Text(
                       picture.subtitle,
-                      style: TextStyle(fontSize: 20),
+                      style: const TextStyle(fontSize: 20),
                     )
                   ],
                 );
@@ -112,10 +117,10 @@ class _SlideListState extends State<SlideList> {
           },
         ),
         Positioned(
-          bottom: 10,
+          bottom: 20,
           left: 50,
           right: 50,
-          child: Container(
+          child: SizedBox(
             height: 60,
             child: Container(
               decoration: BoxDecoration(
@@ -130,14 +135,14 @@ class _SlideListState extends State<SlideList> {
           ),
         ),
         Positioned(
-          bottom: 20,
+          bottom: 30,
           left: 15,
           right: 15,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              _buildBottomItem(Icons.line_style, 0),
-              _buildBottomItem(Icons.photo_camera_back_rounded, 1),
+              _buildBottomItem(Icons.list_rounded, 0),
+              _buildBottomItem(Icons.photo_camera_rounded, 1),
             ],
           ),
         ),
@@ -148,8 +153,8 @@ class _SlideListState extends State<SlideList> {
   Widget _buildBottomItem(IconData icon, index) {
     return IconButton(
       onPressed: () {
-        // Navigator.pushReplacement(context,
-        //     MaterialPageRoute(builder: (context) => const ScrollList()));
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const ScrollList()));
       },
       icon: Icon(
         icon,
